@@ -58,16 +58,16 @@ class Compiler:
             elif token_type == TokenType.K_CALL:
                 self.__parse_call(token, function_code)
             elif token_type in SINGLE_OPCODES:
-                function_code += struct.pack(Constants.OP_CODE_SIZE_FORMAT, get_opcode(token), 0)
+                function_code += struct.pack("<BH", get_opcode(token), 0)
             else:
                 raise LanmoSyntaxError(token, "Unknown token or Unhandled opCode")
             op_code_count += 1
         function = bytearray()
-        function += struct.pack(Constants.FUNCTION_NAME_SIZE_FORMAT, name_index)
-        function += struct.pack(Constants.FUNCTION_ARG_COUNT_FORMAT, int(args_count.get_raw()))
-        function += struct.pack(Constants.FUNCTION_LOCAL_COUNT_FORMAT, 0)     # local count 
-        function += struct.pack(Constants.FUNCTION_STACK_SIZE_FORMAT, max_stack_size)
-        function += struct.pack(Constants.FUNCTION_CODE_LEN_FORMAT, op_code_count)
+        function += struct.pack("<H", name_index)
+        function += struct.pack("<B", int(args_count.get_raw()))
+        function += struct.pack("<I", 0)     # local count 
+        function += struct.pack("<H", max_stack_size)
+        function += struct.pack("<I", op_code_count)
         function += function_code
         self.function_table += function
     
@@ -77,26 +77,26 @@ class Compiler:
         count = int(value.get_raw())
         if count >= 256:
             raise LanmoSyntaxError("call size should be <= 255")
-        excution_code += struct.pack(Constants.OP_CODE_SIZE_FORMAT, get_opcode(token), count)
+        excution_code += struct.pack("<BH", get_opcode(token), count)
     
     def __parse_push(self, token: Word, execution_code: bytearray) -> None:
         value: Word = next(self.tokens)
         index = self.__add_constant(value)
-        execution_code += struct.pack(Constants.OP_CODE_SIZE_FORMAT, get_opcode(token), index)
+        execution_code += struct.pack("<BH", get_opcode(token), index)
 
     def __add_constant(self, token: Word) -> int:
         raw_value = token.get_raw()
         if raw_value not in self.constant_lookup:
             self.constant_lookup[raw_value] = len(self.constant_lookup)
             if token.get_type() == TokenType.INTEGER:
-                self.constant_table += struct.pack(Constants.INT_FORMAT, DataType.INTEGER.value, Constants.INT_SIZE, int(raw_value))
+                self.constant_table += struct.pack("<BIi", DataType.INTEGER.value, 4, int(raw_value))
             elif token.get_type() == TokenType.IDENTIFIER:
                 word = token.get_raw()
-                self.constant_table += struct.pack(Constants.STRING_FORMAT, DataType.IDENTIFIER.value)
+                self.constant_table += struct.pack("<B", DataType.IDENTIFIER.value)
                 self.constant_table += struct.pack(Constants.STRING_LEN_FORMAT(word), len(word), word.encode('utf-8'))
             elif token.get_type() == TokenType.STRING:
                 string_value = token.get_raw()[1:-1]
-                self.constant_table += struct.pack(Constants.STRING_FORMAT, DataType.STRING.value)
+                self.constant_table += struct.pack("<B", DataType.STRING.value)
                 self.constant_table += struct.pack(Constants.STRING_LEN_FORMAT(string_value), len(string_value), string_value.encode('utf-8'))
             else:
                 raise LanmoSyntaxError(token, f"Expected CONSTANT; got {token.get_type().value}")
@@ -107,9 +107,9 @@ class Compiler:
             raise LanmoSyntaxError(None, "the file contains too many symbols")
         final_byte_code = bytearray()
         final_byte_code += get_header()
-        final_byte_code += struct.pack(Constants.CONSTANT_LOOKUP_COUNT_SIZE_FORMAT, len(self.constant_lookup))
+        final_byte_code += struct.pack("<H", len(self.constant_lookup))
         final_byte_code += self.constant_table
-        final_byte_code += struct.pack(Constants.FUNCTION_LOOKUP_COUNT_SIZE_FORMAT, self.function_count)
+        final_byte_code += struct.pack("<H", self.function_count)
         final_byte_code += self.function_table
         return final_byte_code
 
@@ -125,4 +125,4 @@ def tokens_iter(tokens: list[Word]):
         yield token
 
 def get_header() -> bytearray:
-    return struct.pack(Constants.HEADER_FORMAT, Constants.MAGIC, Constants.MAJOR_VERSION, Constants.MINOR_VERSION)
+    return struct.pack("<IHH", Constants.MAGIC, Constants.MAJOR_VERSION, Constants.MINOR_VERSION)
