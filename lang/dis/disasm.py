@@ -1,14 +1,11 @@
 from typing import TextIO
 
+from lang.parser.constants import Constants
 from lang.parser.datatype import DataType
 from lang.parser.opcodetype import OpCodeType
 from lang.dis.byte_dispenser import ByteDispenser
 
 from exceptions import LanmoDisAsmError
-
-MAGIC = 2273
-MAJOR_VERSION = 1
-MINOR_VERSION = 0
 
 OP_WITH_LOOKUP = {
     OpCodeType.PUSH
@@ -26,7 +23,7 @@ class Disasm:
         self.__disassemble()
 
     def render(self) -> str:
-        self.fp.write(f"// LANMO v{MAJOR_VERSION}.{MINOR_VERSION}\n")
+        self.fp.write(f"// LANMO v{Constants.MAJOR_VERSION}.{Constants.MINOR_VERSION}\n")
         for function in self.function_table:
             name       = function[0]
             args_count = function[1]
@@ -40,9 +37,9 @@ class Disasm:
         magic = self.bd.next_int(4)
         major_version = self.bd.next_int(2)
         minor_version = self.bd.next_int(2)
-        if magic != MAGIC:
+        if magic != Constants.MAGIC:
             raise LanmoDisAsmError("Wrong Magic")
-        if major_version != MAJOR_VERSION or minor_version != MINOR_VERSION:
+        if major_version != Constants.MAJOR_VERSION or minor_version != Constants.MINOR_VERSION:
             raise LanmoDisAsmError(f"Version v{major_version}.{minor_version} is not supported")
         self.__read_symbols()
         self.__read_functions()
