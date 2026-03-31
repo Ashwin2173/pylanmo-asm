@@ -1,3 +1,8 @@
 *.pyc
+*.spec
+.idea/
+build/
+dist/
+
 *.lmc
 *.dis.lm
