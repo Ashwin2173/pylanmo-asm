@@ -8,7 +8,6 @@ from lang.parser.constants import Constants
 from exceptions import LanmoSyntaxError
 
 SINGLE_OPCODES = {
-    TokenType.K_ADD,
     TokenType.K_PEEK,
     TokenType.K_POP,
     TokenType.K_HALT,
@@ -68,6 +67,8 @@ class Compiler:
                 self.__parse_push(token, function_code)
             elif token_type == TokenType.K_CALL:
                 self.__parse_call(token, function_code)
+            elif token_type == TokenType.K_BIN_OP:
+                self.__parse_bin_op(token, function_code)
             elif token_type in SINGLE_OPCODES:
                 function_code += struct.pack("<BH", get_opcode(token), 0)
             else:
@@ -81,13 +82,18 @@ class Compiler:
         function += function_code
         self.function_table += function
     
-    def __parse_call(self, token: Word, excution_code: bytearray) -> None:
+    def __parse_call(self, token: Word, execution_code: bytearray) -> None:
         value: Word = next(self.tokens)
         expect_token(value, TokenType.INTEGER)
         count = int(value.get_raw())
         if count >= 256:
             raise LanmoSyntaxError("call size should be <= 255")
-        excution_code += struct.pack("<BH", get_opcode(token), count)
+        execution_code += struct.pack("<BH", get_opcode(token), count)
+
+    def __parse_bin_op(self, token: Word, execution_code: bytearray) -> None:
+        value: Word = next(self.tokens)
+        expect_token(value, TokenType.INTEGER)
+        execution_code += struct.pack("<BH", get_opcode(token), int(value.get_raw()))
     
     def __parse_push(self, token: Word, execution_code: bytearray) -> None:
         value: Word = next(self.tokens)

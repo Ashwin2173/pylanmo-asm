@@ -2,7 +2,7 @@ TOKEN_GRAMMER = r"""
 (?P<COMMENT>//[^\n]*)                                     # single-line comment
 | (?P<K_PUSH>PUSH)                                        # push keyword
 | (?P<K_POP>POP)                                          # pop keyword
-| (?P<K_ADD>ADD)                                          # add keyword
+| (?P<K_BIN_OP>BIN_OP)                                    # binary operation keyword
 | (?P<K_PEEK>PEEK)                                        # peek keyword
 | (?P<K_CALL>CALL)                                        # call keyword
 | (?P<K_HALT>HALT)                                        # halt keyword

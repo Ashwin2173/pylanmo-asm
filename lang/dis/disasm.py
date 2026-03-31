@@ -11,7 +11,8 @@ OP_WITH_LOOKUP = {
     OpCodeType.PUSH
 }
 OP_WITH_VALUE = {
-    OpCodeType.CALL
+    OpCodeType.CALL,
+    OpCodeType.BIN_OP
 }
 
 class Disasm:

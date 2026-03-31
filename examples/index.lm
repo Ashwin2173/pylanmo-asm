@@ -1,0 +1,8 @@
+main {
+    PUSH   1
+    PUSH   2
+    BIN_OP 1
+    PEEK
+    PUSH 1
+    RET
+}
