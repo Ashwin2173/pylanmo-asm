@@ -20,3 +20,6 @@ class TokenType(Enum):
     K_HALT = "HALT"
     K_EOF = "EOF"
     K_RET = "RET"
+    K_NONE = "NONE"
+    K_TRUE = "TRUE"
+    K_FALSE = "FALSE"

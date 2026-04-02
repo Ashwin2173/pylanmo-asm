@@ -106,7 +106,13 @@ class Compiler:
         raw_value = token.get_raw()
         if raw_value not in self.constant_lookup:
             self.constant_lookup[raw_value] = len(self.constant_lookup)
-            if token_type == TokenType.INTEGER:
+            if token_type == TokenType.K_NONE:
+                self.constant_table += struct.pack("<B", DataType.NONE.value)
+            elif token_type == TokenType.K_TRUE:
+                self.constant_table += struct.pack("<BB", DataType.BOOLEAN.value, 1)
+            elif token_type == TokenType.K_FALSE:
+                self.constant_table += struct.pack("<BB", DataType.BOOLEAN.value, 0)
+            elif token_type == TokenType.INTEGER:
                 self.constant_table += struct.pack("<BIi", DataType.INTEGER.value, 4, int(raw_value))
             elif token_type == TokenType.IDENTIFIER:
                 word = token.get_raw()

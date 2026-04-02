@@ -8,6 +8,9 @@ TOKEN_GRAMMER = r"""
 | (?P<K_HALT>HALT)                                        # halt keyword
 | (?P<K_EOF>EOF)                                          # eof keyword
 | (?P<K_RET>RET)                                          # return keyword
+| (?P<K_NONE>NONE)                                        # none keyword
+| (?P<K_TRUE>TRUE)                                        # true keyword
+| (?P<K_FALSE>FALSE)                                      # false keyword
 | (?P<OPEN_BRACE>\{)                                      # open brace operator
 | (?P<CLOSE_BRACE>\})                                     # close brace operator
 | (?P<IDENTIFIER>[A-Za-z_]\w*)                            # identifiers and keywords

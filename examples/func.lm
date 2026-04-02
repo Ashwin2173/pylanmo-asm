@@ -1,22 +1,6 @@
 main {
-    PUSH 10
-    PUSH 20
-    ADD
-    PUSH print_hello
-    PUSH ashwin
-    CALL 0
-    RET
-}
-
-print_hello {
-    PUSH "Hello, World"
-    PUSH print
-    CALL 1
-    RET
-}
-
-print {
+    PUSH TRUE
     PEEK
-    POP
+    PUSH 1
     RET
 }

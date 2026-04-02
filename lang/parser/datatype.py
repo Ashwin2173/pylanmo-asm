@@ -5,3 +5,5 @@ class DataType(Enum):
     STRING = auto()
     IDENTIFIER = auto()
     FUNCTION = auto()
+    NONE = auto()
+    BOOLEAN = auto()
