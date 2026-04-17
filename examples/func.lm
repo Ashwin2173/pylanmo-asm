@@ -1,6 +1,10 @@
 main {
-    PUSH TRUE
+    LABEL x1
+    PUSH "Hello, World"
     PEEK
+    POP
+    JUMP x1
     PUSH 1
+    LABEL x2
     RET
 }

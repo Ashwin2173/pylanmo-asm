@@ -7,6 +7,8 @@ TOKEN_GRAMMER = r"""
 | (?P<K_CALL>CALL)                                        # call keyword
 | (?P<K_HALT>HALT)                                        # halt keyword
 | (?P<K_EOF>EOF)                                          # eof keyword
+| (?P<K_LABEL>LABEL)                                      # label keyword
+| (?P<K_JUMP>JUMP)                                        # jump keyword
 | (?P<K_RET>RET)                                          # return keyword
 | (?P<K_NONE>NONE)                                        # none keyword
 | (?P<K_TRUE>TRUE)                                        # true keyword

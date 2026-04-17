@@ -5,7 +5,7 @@ class LanmoError(Exception):
         super().__init__(*args)
 
 class LanmoSyntaxError(Exception):
-    def __init__(self, token: Word, message: str):
+    def __init__(self, token: Word | None, message: str):
         super().__init__(message)
         self.token = token
 

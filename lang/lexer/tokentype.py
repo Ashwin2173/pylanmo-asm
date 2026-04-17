@@ -23,3 +23,5 @@ class TokenType(Enum):
     K_NONE = "NONE"
     K_TRUE = "TRUE"
     K_FALSE = "FALSE"
+    K_LABEL = "LABEL"
+    K_JUMP = "JUMP"
