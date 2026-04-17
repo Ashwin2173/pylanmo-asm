@@ -72,6 +72,7 @@ class Compiler:
                 self.__parse_jump(func_name, token, function_code)
             elif token_type == TokenType.K_LABEL:
                 expect_token(next(self.tokens), TokenType.IDENTIFIER)
+                op_code_count -= 1
             elif token_type in Constants.SINGLE_OPCODES:
                 function_code += struct.pack("<BH", get_opcode(token), 0)
             else:

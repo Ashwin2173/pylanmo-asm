@@ -12,6 +12,7 @@ OP_WITH_LOOKUP = {
 }
 OP_WITH_VALUE = {
     OpCodeType.CALL,
+    OpCodeType.JUMP,
     OpCodeType.BIN_OP
 }
 
