@@ -13,6 +13,7 @@ OP_WITH_LOOKUP = {
 OP_WITH_VALUE = {
     OpCodeType.CALL,
     OpCodeType.JUMP,
+    OpCodeType.JUMP_IF_FALSE,
     OpCodeType.BIN_OP
 }
 
@@ -62,6 +63,9 @@ class Disasm:
             elif symbol_type == DataType.FUNCTION.value:
                 size = self.bd.next_int(4)
                 self.symbol_table.append(self.bd.next_str(size))
+            elif symbol_type == DataType.BOOLEAN.value:
+                size = self.bd.next_int(1)
+                self.symbol_table.append("TRUE" if self.bd.next_int(size) else "FALSE")
             else:
                 assert False, f"Unhandled DataType: { str(symbol_type) }"
 

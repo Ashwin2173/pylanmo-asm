@@ -68,8 +68,8 @@ class Compiler:
                 self.__parse_call(token, function_code)
             elif token_type == TokenType.K_BIN_OP:
                 self.__parse_bin_op(token, function_code)
-            elif token_type == TokenType.K_JUMP:
-                self.__parse_jump(func_name, token, function_code)
+            elif token_type == TokenType.K_JUMP or token_type == TokenType.K_JUMP_IF_FALSE:
+                self.__parse_jump(token, func_name, function_code)
             elif token_type == TokenType.K_LABEL:
                 expect_token(next(self.tokens), TokenType.IDENTIFIER)
                 op_code_count -= 1
@@ -86,7 +86,7 @@ class Compiler:
         function += function_code
         self.function_table += function
 
-    def __parse_jump(self, function_name: Word, token: Word, execution_code: bytearray) -> None:
+    def __parse_jump(self, token: Word, function_name: Word, execution_code: bytearray) -> None:
         label: Word = next(self.tokens)
         expect_token(label, TokenType.IDENTIFIER)
         if label.get_raw() not in self.fp_function_name[function_name.get_raw()]:

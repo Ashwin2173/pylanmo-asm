@@ -1,10 +1,8 @@
 main {
-    LABEL x1
-    PUSH "Hello, World"
-    PEEK
-    POP
-    JUMP x1
+    PUSH FALSE
+    JUMP_IF_FALSE end
+    PUSH "Ashwin"
+    LABEL end
     PUSH 1
-    LABEL x2
     RET
 }

@@ -8,7 +8,7 @@ class Constants:
     STRING_LEN_FORMAT = lambda word:f"<I{len(word)}s"
 
     SINGLE_OPCODES = {
-        TokenType.K_PEEK,
+        TokenType.K_WRITE,
         TokenType.K_POP,
         TokenType.K_HALT,
         TokenType.K_RET
@@ -18,9 +18,10 @@ class Constants:
         TokenType.K_PUSH,
         TokenType.K_POP,
         TokenType.K_BIN_OP,
-        TokenType.K_PEEK,
+        TokenType.K_WRITE,
         TokenType.K_CALL,
         TokenType.K_HALT,
         TokenType.K_RET,
         TokenType.K_JUMP,
+        TokenType.K_JUMP_IF_FALSE
     }

@@ -3,11 +3,12 @@ TOKEN_GRAMMER = r"""
 | (?P<K_PUSH>PUSH)                                        # push keyword
 | (?P<K_POP>POP)                                          # pop keyword
 | (?P<K_BIN_OP>BIN_OP)                                    # binary operation keyword
-| (?P<K_PEEK>PEEK)                                        # peek keyword
+| (?P<K_WRITE>WRITE)                                      # write keyword
 | (?P<K_CALL>CALL)                                        # call keyword
 | (?P<K_HALT>HALT)                                        # halt keyword
 | (?P<K_EOF>EOF)                                          # eof keyword
 | (?P<K_LABEL>LABEL)                                      # label keyword
+| (?P<K_JUMP_IF_FALSE>JUMP_IF_FALSE)                      # jump if false keyword
 | (?P<K_JUMP>JUMP)                                        # jump keyword
 | (?P<K_RET>RET)                                          # return keyword
 | (?P<K_NONE>NONE)                                        # none keyword

@@ -15,7 +15,7 @@ class TokenType(Enum):
     K_PUSH = "PUSH"
     K_POP = "POP"
     K_BIN_OP = "BIN_OP"
-    K_PEEK = "PEEK"
+    K_WRITE = "WRITE"
     K_CALL = "CALL"
     K_HALT = "HALT"
     K_EOF = "EOF"
@@ -25,3 +25,4 @@ class TokenType(Enum):
     K_FALSE = "FALSE"
     K_LABEL = "LABEL"
     K_JUMP = "JUMP"
+    K_JUMP_IF_FALSE = "JUMP_IF_FALSE"
