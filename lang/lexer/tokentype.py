@@ -25,4 +25,5 @@ class TokenType(Enum):
     K_FALSE = "FALSE"
     K_LABEL = "LABEL"
     K_JUMP = "JUMP"
+    K_DUP = "DUP"
     K_JUMP_IF_FALSE = "JUMP_IF_FALSE"

@@ -10,3 +10,4 @@ class OpCodeType(Enum):
     RET           = auto()
     JUMP          = auto()
     JUMP_IF_FALSE = auto()
+    DUP           = auto()

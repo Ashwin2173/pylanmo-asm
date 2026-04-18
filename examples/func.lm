@@ -1,8 +1,8 @@
 main {
-    PUSH FALSE
-    JUMP_IF_FALSE end
-    PUSH "Ashwin"
-    LABEL end
-    PUSH 1
+    PUSH 0
+    DUP
+    WRITE POP
+    WRITE POP
+    PUSH 0
     RET
 }

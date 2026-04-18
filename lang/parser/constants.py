@@ -10,6 +10,7 @@ class Constants:
     SINGLE_OPCODES = {
         TokenType.K_WRITE,
         TokenType.K_POP,
+        TokenType.K_DUP,
         TokenType.K_HALT,
         TokenType.K_RET
     }
@@ -23,5 +24,6 @@ class Constants:
         TokenType.K_HALT,
         TokenType.K_RET,
         TokenType.K_JUMP,
+        TokenType.K_DUP,
         TokenType.K_JUMP_IF_FALSE
     }
