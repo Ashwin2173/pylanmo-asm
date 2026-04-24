@@ -85,7 +85,7 @@ class Compiler:
             op_code_count += 1
         function = bytearray()
         function += struct.pack("<H", name_index)
-        function += struct.pack("<I", 0)     # local count 
+        function += struct.pack("<I", len(local_dict))     # local count
         function += struct.pack("<H", max_stack_size)
         function += struct.pack("<I", op_code_count)
         function += function_code
