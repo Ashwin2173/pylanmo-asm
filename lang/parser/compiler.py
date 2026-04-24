@@ -57,6 +57,7 @@ class Compiler:
         function_code = bytearray()
         op_code_count = 0
         max_stack_size = 255
+        local_dict: [str, int] = dict()
         expect_token(next(self.tokens), TokenType.OPEN_BRACE)
         for token in self.tokens:
             token_type = token.get_type()
@@ -73,6 +74,10 @@ class Compiler:
             elif token_type == TokenType.K_LABEL:
                 expect_token(next(self.tokens), TokenType.IDENTIFIER)
                 op_code_count -= 1
+            elif token_type == TokenType.K_STORE:
+                self.__parse_store(token, local_dict, function_code)
+            elif token_type == TokenType.K_LOAD:
+                self.__parse_load(token, local_dict, function_code)
             elif token_type in Constants.SINGLE_OPCODES:
                 function_code += struct.pack("<BH", get_opcode(token), 0)
             else:
@@ -85,6 +90,20 @@ class Compiler:
         function += struct.pack("<I", op_code_count)
         function += function_code
         self.function_table += function
+
+    def __parse_load(self, token: Word, local_dict: dict[str, int], execution_code: bytearray) -> None:
+        label: Word = next(self.tokens)
+        expect_token(label, TokenType.IDENTIFIER)
+        if label.get_raw() not in local_dict:
+            raise LanmoSyntaxError(token, f"usage of undefined variable { label.get_raw() }")
+        execution_code += struct.pack("<BH", get_opcode(token), local_dict[label.get_raw()])
+
+    def __parse_store(self, token: Word, local_dict: dict[str, int], execution_code: bytearray) -> None:
+        label: Word = next(self.tokens)
+        expect_token(label, TokenType.IDENTIFIER)
+        if label.get_raw() not in local_dict:
+            local_dict[label.get_raw()] = len(local_dict)
+        execution_code += struct.pack("<BH", get_opcode(token), local_dict[label.get_raw()])
 
     def __parse_jump(self, token: Word, function_name: Word, execution_code: bytearray) -> None:
         label: Word = next(self.tokens)

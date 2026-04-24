@@ -1,0 +1,10 @@
+main {
+    PUSH "Hello, World"
+    STORE x1
+    LOAD x1
+    PUSH 1
+    WRITE
+    PUSH 1
+    RETURN
+}
+

@@ -11,7 +11,9 @@ TOKEN_GRAMMER = r"""
 | (?P<K_DUP>DUP)                                          # dup keyword
 | (?P<K_JUMP_IF_FALSE>JUMP_IF_FALSE)                      # jump if false keyword
 | (?P<K_JUMP>JUMP)                                        # jump keyword
-| (?P<K_RET>RET)                                          # return keyword
+| (?P<K_RETURN>RETURN)                                    # return keyword
+| (?P<K_STORE>STORE)                                      # store keyword
+| (?P<K_LOAD>LOAD)                                        # load keyword
 | (?P<K_NONE>NONE)                                        # none keyword
 | (?P<K_TRUE>TRUE)                                        # true keyword
 | (?P<K_FALSE>FALSE)                                      # false keyword
