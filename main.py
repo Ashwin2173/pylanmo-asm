@@ -9,7 +9,7 @@ program_args = set()
 def read_program_file(args: list[str]) -> tuple[str, str]:
     ret_value = None, None
     for arg in args:
-        if arg.endswith(".lm"):
+        if arg.endswith(".lasm"):
             if ret_value[0] is not None:
                 print("[Error] Passed multiple files")
                 exit(1)
@@ -32,7 +32,8 @@ def main(args: list[str]) -> None:
     elif program is None or "--help" in program_args:
         print("USAGE:")
         print("    lasm [OPTIONS] [PROGRAM_PATH]")
-        print("OPTIONS:") 
+        print("PROGRAM_PATH:   <lasm_file>.lasm")
+        print("OPTIONS:")
         print("    --dis       Disasmble bytecode to program")
         print("    --help      Prints this usage")
         print("    --version   prints the version")
@@ -41,13 +42,13 @@ def main(args: list[str]) -> None:
         if not path.endswith("lmc"):
             print("[ERROR] Required .lmc file for disasmbling")
             sys.exit(1)
-        with open(f"{path[:-4]}.dis.lm", 'w') as new_file_path:
+        with open(f"{path[:-4]}.dis.lasm", 'w') as new_file_path:
             disasmbler = Disasm(program, new_file_path)
             disasmbler.render()
         sys.exit(0)
     else:
-        if not path.endswith("lm"):
-            print("[ERROR] Required .lm file for compiling")
+        if not path.endswith("lasm"):
+            print("[ERROR] Required .lasm file for compiling")
             exit(1)
         asmbler = Assembler(program, path)
         asmbler.assemble()

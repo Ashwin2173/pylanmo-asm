@@ -9,7 +9,7 @@ class Assembler:
 
     def assemble(self) -> None:
         tokens = tokenize(self.program)
-        byte_code_file = f"{self.path[:-3]}.lmc"
+        byte_code_file = f"{self.path[:-5]}.lmc"
         with open(byte_code_file, 'wb') as byte_code_file:
             try:
                 compiler = Compiler(tokens)
